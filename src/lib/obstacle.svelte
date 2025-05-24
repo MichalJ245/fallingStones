@@ -33,8 +33,8 @@
 	function move() {
 		if (posY < 500 && !gameOver) {
 			posY += vel;
-			if (pPosX - 64 <= posX && pPosX + 64 >= posX) {
-				if (pPosY - 64 <= posY && pPosY + 64 >= posY) {
+			if (pPosX - 50 <= posX && pPosX + 50 >= posX) {
+				if (pPosY - 50 <= posY && pPosY + 50 >= posY) {
 					endGame();
 				}
 			}

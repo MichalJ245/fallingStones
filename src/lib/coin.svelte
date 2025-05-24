@@ -4,7 +4,6 @@
 	let posY = $state(100);
 	let vel = Math.random() * 3;
 	newVel()
-	console.log(vel);
 	let isVisible = $state(true);
 	let pPosX = $state(250);
 	let pPosY = $state(500);
@@ -14,7 +13,6 @@
 		vel = Math.round(Math.random() *3);
 		while (vel <= 0) {
 		vel = Math.round(Math.random() *3);
-		console.log(vel);
 	}
 	}
 	function moveP(event: { detail: { x: number; y: number; }; }): void {
@@ -22,7 +20,6 @@
 		pPosY = event.detail.y;
 	}
 	function restart() {
-        
 		posY = 100;
 		posX = Math.round(Math.random() * 500);
 		newVel();
@@ -32,14 +29,20 @@
 	function move() {
 		if (posY < 500 && !gameOver) {
 			posY += vel;
-			if (pPosX - 64 <= posX && pPosX + 64 >= posX) {
-				if (pPosY - 64 <= posY && pPosY + 64 >= posY) {
-                    restart();
+			if (pPosX - 50 <= posX && pPosX + 50 >= posX) {
+				if (pPosY - 50 <= posY && pPosY + 50 >= posY) {
 					window.dispatchEvent(new CustomEvent('addPoint'));
-                    
+					restart();
+				}
+				else
+				{
+					requestAnimationFrame(move);
 				}
 			}
+			else
+			{
 			requestAnimationFrame(move);
+			}
 		} else {
 			if (gameOver) {
 				isVisible = false;
@@ -59,5 +62,5 @@
 </script>
 
 {#if isVisible}
-	<div class="absolute h-16 w-16" style="left: {posX}px; top: {posY}px"><img src="/grafiki/animationCoin/coin1.png" alt="rock" id="coin"></div>
+	<div class="absolute h-16 w-16" style="left: {posX}px; top: {posY}px" id="main"><img src="/grafiki/animationCoin/coin1.png" alt="coin"></div>
 {/if}
