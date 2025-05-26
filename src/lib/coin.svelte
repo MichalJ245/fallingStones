@@ -1,18 +1,34 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	let posX = $state(Math.round(Math.random() * 436));
+	let posX = $state(Math.round(Math.random() * 400));
 	let posY = $state(100);
-	let vel = Math.random() * 3;
+	let vel = Math.random() * 4;
 	newVel()
 	let isVisible = $state(true);
 	let pPosX = $state(250);
 	let pPosY = $state(500);
 	let gameOver = false;
+	const frames = ['/grafiki/animationCoin/coin1.png','/grafiki/animationCoin/coin2.png','/grafiki/animationCoin/coin3.png','/grafiki/animationCoin/coin4.png'];
+	let index = $state(0);
+	let doAnimate = $state(0);
+	function animate()
+	{
+		let handler = document.getElementById('coin') as HTMLImageElement;
+		handler.src = frames[index];
+		if(index <= 2)
+	{
+		index++;
+	}
+	else
+	{
+		index = 0;
+	}
+	}
 	function newVel()
 	{
-		vel = Math.round(Math.random() *3);
-		while (vel <= 0) {
-		vel = Math.round(Math.random() *3);
+		vel = Math.round(Math.random() *4);
+		while (vel <= 1) {
+		vel = Math.round(Math.random() *4);
 	}
 	}
 	function moveP(event: { detail: { x: number; y: number; }; }): void {
@@ -21,7 +37,7 @@
 	}
 	function restart() {
 		posY = 100;
-		posX = Math.round(Math.random() * 500);
+		posX = Math.round(Math.random() * 400);
 		newVel();
 		isVisible = true;
 		move();
@@ -51,6 +67,11 @@
 				restart();
 			}
 		}
+		if(doAnimate %3== 0)
+		{
+			animate();
+		}
+		doAnimate++;
 	}
 	onMount(() => {
 		window.addEventListener('playerMove', (event) => moveP(event as CustomEvent<{ x: number; y: number }>));
@@ -62,5 +83,5 @@
 </script>
 
 {#if isVisible}
-	<div class="absolute h-16 w-16" style="left: {posX}px; top: {posY}px" id="main"><img src="/grafiki/animationCoin/coin1.png" alt="coin"></div>
+	<div class="absolute h-16 w-16" style="left: {posX}px; top: {posY}px" id="main"><img src="/grafiki/animationCoin/coin1.png" alt="coin" id="coin"></div>
 {/if}

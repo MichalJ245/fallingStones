@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	let posX = $state(250);
 	let posY = $state(500);
-	let vel = $state(5);
+	let vel = $state(7);
 	let moveLeft = false;
 	let moveRight = false;
 	let gameOver = false;

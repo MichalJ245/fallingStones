@@ -1,18 +1,35 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	let posX = $state(Math.round(Math.random() * 436));
+	const {
+		min,
+		max
+	}:
+	{
+		min: number;
+		max: number;
+	} = $props();
+	let posX = $state(0);
+	getX();
 	let posY = $state(100);
-	let vel = Math.random() * 3;
+	let vel = Math.random() * 4;
 	newVel()
 	let isVisible = $state(true);
 	let pPosX = $state(250);
 	let pPosY = $state(500);
 	let gameOver = false;
+	function getX()
+	{
+		posX = Math.round(Math.random() * 436);
+		while(posX < min || posX > max)
+	{
+		posX = Math.round(Math.random() * 436);
+	}
+	}
 	function newVel()
 	{
-		vel = Math.round(Math.random() *3);
-		while (vel <= 0) {
-		vel = Math.round(Math.random() *3);
+		vel = Math.round(Math.random() *4);
+		while (vel <= 1) {
+		vel = Math.round(Math.random() *4);
 	}
 	}
 	function endGame() {
@@ -25,7 +42,7 @@
 	}
 	function restart() {
 		posY = 100;
-		posX = Math.round(Math.random() * 500);
+		getX();
 		newVel();
 		isVisible = true;
 		move();
